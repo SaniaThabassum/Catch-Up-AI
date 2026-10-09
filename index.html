@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CatchUp AI - "What Did I Miss?" Local-First Chat Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Home & Login View (Landing Screen) -->
+  <div id="homeLoginView" class="home-login-container">
+    <div class="home-login-card">
+      <div class="home-brand-badge">
+        <span class="badge-dot"></span>
+        <span>100% Local-First AI • Zero Cloud Egress</span>
+      </div>
+
+      <div class="home-logo-group">
+        <div class="home-logo-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <h1 class="home-title">CatchUp AI</h1>
+        <div class="home-subtitle">The Unread Problem • "What Did I Miss?"</div>
+      </div>
+
+      <p class="home-description">
+        Turn overwhelming unread message backlogs into prioritized clarity in seconds. Extract decisions, detect changed plans, isolate your pending tasks, and verify findings directly against source messages—all on-device.
+      </p>
+
+      <div class="home-features-grid">
+        <div class="home-feature-pill">
+          <span class="pill-icon">⚡</span>
+          <span>30s Catch-Up</span>
+        </div>
+        <div class="home-feature-pill">
+          <span class="pill-icon">🎯</span>
+          <span>Personal Tasks</span>
+        </div>
+        <div class="home-feature-pill">
+          <span class="pill-icon">🔄</span>
+          <span>Changed Plans</span>
+        </div>
+      </div>
+
+      <!-- Quick Persona Switcher Chips for Evaluators / Hackathon Judges -->
+      <div class="home-persona-picker">
+        <div class="home-picker-label">⚡ 1-Click Persona Sign-In:</div>
+        <div class="persona-chips-row">
+          <button type="button" class="home-persona-chip active" data-name="Alex" data-role="Frontend Lead" title="Sign in as Alex (Engineering Lead)">
+            <span class="chip-avatar" style="background: #6366f1;">AL</span>
+            <span class="chip-text"><strong>Alex</strong> · Frontend</span>
+          </button>
+          <button type="button" class="home-persona-chip" data-name="Sarah" data-role="Incident Commander" title="Sign in as Sarah (Incident Commander)">
+            <span class="chip-avatar" style="background: #ec4899;">SA</span>
+            <span class="chip-text"><strong>Sarah</strong> · Lead</span>
+          </button>
+          <button type="button" class="home-persona-chip" data-name="David" data-role="DevOps / SRE" title="Sign in as David (DevOps / SRE)">
+            <span class="chip-avatar" style="background: #3b82f6;">DA</span>
+            <span class="chip-text"><strong>David</strong> · DevOps</span>
+          </button>
+          <button type="button" class="home-persona-chip" data-name="Elena" data-role="Database Engineer" title="Sign in as Elena (Database Eng)">
+            <span class="chip-avatar" style="background: #10b981;">EL</span>
+            <span class="chip-text"><strong>Elena</strong> · DBA</span>
+          </button>
+        </div>
+      </div>
+
+      <form id="loginForm" class="login-form-box" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label" for="loginNameInput">Your Name or Alias</label>
+          <div class="input-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <input type="text" id="loginNameInput" class="form-input" placeholder="e.g. Alex" value="Alex" required autocomplete="name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginRoleInput">Role / Team <span style="color: var(--text-muted); font-weight: normal;">(Optional)</span></label>
+          <div class="input-icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <input type="text" id="loginRoleInput" class="form-input" placeholder="e.g. Frontend Lead, Engineering" value="Frontend Lead">
+          </div>
+        </div>
+
+        <button type="submit" class="primary-btn" id="enterAppBtn" style="padding: 0.75rem; font-size: 0.95rem; justify-content: center; width: 100%; margin-top: 0.25rem;">
+          <span>Enter Workspace</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <button type="button" class="secondary-action-btn" id="quickDemoLoginBtn" style="padding: 0.65rem; font-size: 0.85rem; justify-content: center; width: 100%; border-color: rgba(99, 102, 241, 0.4); color: var(--primary-light);">
+          🧪 Try Quick Demo (Auto-Load Sample & Analyze)
+        </button>
+      </form>
+
+      <div class="home-privacy-footer">
+        🔒 <strong>Local-First Guarantee:</strong> Zero analytics or data egress. No external login credentials required—your profile and chats stay strictly in your browser session.
+        <div style="margin-top: 0.5rem;">
+          <a href="https://github.com/SaniaThabassum/Catch-Up-AI#catch-up-ai" target="_blank" rel="noopener noreferrer" style="color: var(--primary-light); text-decoration: underline; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+            <span>⭐ View GitHub Repository: SaniaThabassum/Catch-Up-AI</span> &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Workspace (Shown after entering/login) -->
+  <div id="mainAppView" style="display: none;">
+
+    <!-- Top App Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">CatchUp AI</h1>
+          <div class="brand-subtitle">The Unread Problem • "What Did I Miss?"</div>
+        </div>
+      </div>
+
+      <!-- Header Center: Quick Actions -->
+      <div class="header-center">
+        <div class="channel-selector-bar" id="channelSelectorBar">
+          <button class="channel-btn active" id="openImportModalBtn" title="Import custom chat (.txt, .json, .csv)">
+            <span>📥 + Import Chat</span>
+          </button>
+          <button class="channel-btn" id="loadDemoSampleBtn" title="Load Production Incident Demo">
+            <span>🚨 Incident Demo</span>
+          </button>
+          <button class="channel-btn" id="loadLaunchSampleBtn" title="Load Q4 Product Launch Demo">
+            <span>🚀 Launch Demo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- User Persona & Privacy Shield -->
+      <div class="header-right">
+        <button class="privacy-shield-btn" id="openPrivacyModalBtn" title="Inspect Local Privacy Guarantees">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span>100% Local-First (0 B Egress)</span>
+        </button>
+
+        <button class="secondary-action-btn" id="clearSessionBtn" title="Clear conversation data and reset session (100% Privacy)" style="font-size: 0.75rem; padding: 0.4rem 0.75rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Clear Session</span>
+        </button>
+
+        <div class="persona-box">
+          <span class="persona-label">👤 Persona:</span>
+          <select id="personaQuickSelect" class="persona-select" title="Switch persona to re-evaluate personalized tasks and missed updates">
+            <option value="Alex" selected>Alex (Frontend)</option>
+            <option value="Sarah">Sarah (Lead)</option>
+            <option value="David">David (DevOps)</option>
+            <option value="Elena">Elena (DBA)</option>
+            <option value="custom">Custom...</option>
+          </select>
+          <input type="text" id="userNameInput" class="persona-input" value="Alex" placeholder="Name..." style="display: none; width: 75px;">
+        </div>
+
+        <a href="https://github.com/SaniaThabassum/Catch-Up-AI#catch-up-ai" target="_blank" rel="noopener noreferrer" class="github-repo-link" title="Open GitHub Repository (Catch-Up-AI)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+
+        <button class="secondary-action-btn" id="logoutBtn" title="Log out and return to Home" style="font-size: 0.75rem; padding: 0.4rem 0.65rem;">
+          <span>🚪 Logout</span>
+        </button>
+      </div>
+    </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- Clean Input Workspace (When no conversation is loaded) -->
+    <section class="input-workspace-card" id="inputWorkspaceCard">
+      <div class="workspace-header">
+        <div class="workspace-badge">⚡ 100% Local-First AI • Zero Cloud Egress</div>
+        <h2 class="workspace-title">Import Conversation to Catch Up</h2>
+        <p class="workspace-subtitle">
+          Paste unread messages or drop a chat export file (.txt, .json, .csv) from Slack, Teams, Discord, or WhatsApp.
+          All summarization, decision extraction, deadline detection, and changed-plan tracking run entirely on your device.
+        </p>
+      </div>
+
+      <!-- Drag & Drop Zone -->
+      <div id="workspaceDropZone" class="workspace-drop-zone">
+        <input type="file" id="workspaceFileInput" accept=".txt,.json,.csv,.log" style="display: none;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 0.5rem;">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Click or Drag & Drop File Here (.txt, .json, .csv)</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">Drop exported chat logs from Slack, WhatsApp, Discord, or Teams</div>
+      </div>
+
+      <div class="workspace-divider">— OR PASTE RAW CHAT TEXT —</div>
+
+      <textarea class="workspace-textarea" id="workspaceChatInput" placeholder="Paste your chat transcript here... Example:
+[10:15 AM] Sarah: Hey team, we have a critical blocker on checkout.
+[10:16 AM] David: Investigating database pool now.
+[10:17 AM] Sarah: @Alex can you verify if staging checkout is affected? Deadline by 11:30 AM today.
+[10:18 AM] Sarah: Decision: We will rollback release v2.4.2 immediately.
+[10:20 AM] Elena: Update: Team sync moved from 2:00 PM to 3:30 PM today."></textarea>
+
+      <div class="workspace-actions">
+        <button class="secondary-action-btn" id="workspacePreviewBtn" style="padding: 0.6rem 1.1rem;">
+          👁️ Preview Messages First
+        </button>
+        <button class="secondary-action-btn" id="workspaceDemoBtn" style="padding: 0.6rem 1.1rem; border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">
+          🚨 Load Incident Demo
+        </button>
+        <button class="secondary-action-btn" id="workspaceLaunchBtn" style="padding: 0.6rem 1.1rem; border-color: rgba(99, 102, 241, 0.4); color: var(--primary-light);">
+          🚀 Load Launch Demo
+        </button>
+        <button class="primary-btn" id="workspaceAnalyzeBtn" style="padding: 0.6rem 1.4rem;">
+          ⚡ Run Local AI Analysis
+        </button>
+      </div>
+    </section>
+
+    <!-- Results Dashboard (Displayed once conversation is analyzed) -->
+    <div id="resultsDashboard" style="display: none; width: 100%;">
+      <!-- Active Conversation Summary Bar -->
+      <div class="active-conversation-banner">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <span style="font-size: 0.85rem;">💬</span>
+          <span style="font-size: 0.88rem; font-weight: 600;" id="activeConvTitle">Active Conversation Analysis</span>
+          <span class="channel-badge" id="activeConvBadge" style="background: rgba(99, 102, 241, 0.2); color: var(--primary-light);">0 messages</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button class="secondary-action-btn" id="analyzeNewChatBtn" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;">
+            📥 + Analyze Another Chat
+          </button>
+        </div>
+      </div>
+
+      <!-- Privacy & Local Processing Explanation Card (Feature 5) -->
+      <section class="privacy-explanation-card">
+        <div class="privacy-header-row">
+          <div class="privacy-card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Privacy & Local Processing Explanation</span>
+          </div>
+          <span class="privacy-egress-badge">🔒 100% On-Device • 0 Bytes Egress</span>
+        </div>
+        <div class="privacy-points-grid">
+          <div class="privacy-point-item">
+            <span>🛡️</span>
+            <div><strong>Zero Data Egress:</strong> Conversations, messages, and summaries never leave your device. 0 bytes transmitted.</div>
+          </div>
+          <div class="privacy-point-item">
+            <span>⚡</span>
+            <div><strong>On-Device CPU Analysis:</strong> Summarization, tasks, and deadlines execute directly in local browser V8 or local Python CPU.</div>
+          </div>
+          <div class="privacy-point-item">
+            <span>🚫</span>
+            <div><strong>No External Cloud AI:</strong> Zero external AI APIs (no OpenAI, no Anthropic, no Google Gemini). Complete offline privacy.</div>
+          </div>
+          <div class="privacy-point-item">
+            <span>🗑️</span>
+            <div><strong>Volatile Local Session:</strong> Chats live strictly in memory. Clicking "Clear Session" wipes 100% of data instantly.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero 'Catch Me Up in 30 Seconds' Executive Summary -->
+      <section class="hero-digest-card">
+      <div class="digest-header">
+        <div class="digest-title-group">
+          <span class="digest-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Catch Me Up in 30 Seconds
+          </span>
+          <h2 class="digest-title" id="digestTitle">Executive Overview</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="secondary-action-btn" id="listenBriefingBtn" style="background: rgba(99, 102, 241, 0.15); color: var(--primary-light); border-color: rgba(99, 102, 241, 0.3);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <span id="listenBtnText">Listen Briefing (30s)</span>
+          </button>
+          <div id="statusPillContainer">
+            <span class="status-pill critical" id="statusPill">🚨 Incident Mitigation Underway</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick-Action Bullets -->
+      <div class="digest-bullets-grid" id="digestBulletsGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Metrics Ribbon (Feature 1) -->
+      <div class="metrics-ribbon">
+        <div class="metric-stat-box">
+          <span class="metric-number" id="metricImportant">0</span>
+          <span class="metric-label">Important Messages</span>
+        </div>
+        <div class="metric-stat-box">
+          <span class="metric-number action" id="metricPendingTasks">0</span>
+          <span class="metric-label">Pending Tasks</span>
+        </div>
+        <div class="metric-stat-box">
+          <span class="metric-number high" id="metricUpcomingDeadlines">0</span>
+          <span class="metric-label">Upcoming Deadlines</span>
+        </div>
+        <div class="metric-stat-box">
+          <span class="metric-number critical" id="metricCriticalMissed">0</span>
+          <span class="metric-label">Critical Missed</span>
+        </div>
+        <div class="metric-stat-box">
+          <span class="metric-number decision" id="metricDecisions">0</span>
+          <span class="metric-label">Key Decisions</span>
+        </div>
+        <div class="metric-stat-box">
+          <span class="metric-number local" id="metricComputeTime">0 ms</span>
+          <span class="metric-label">Local Compute</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Critical Updates Missed While Away (Feature 1) -->
+    <section class="critical-missed-section" id="criticalMissedSection" style="display: none;">
+      <div class="critical-missed-header">
+        <div class="critical-missed-title">
+          <span>🚨 Critical Updates You Missed While Away</span>
+        </div>
+        <span style="font-size: 0.78rem; color: #fca5a5;">Urgent blockers and incident alerts</span>
+      </div>
+      <div class="critical-missed-grid" id="criticalMissedGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Navigation Tabs & Actions -->
+    <div class="app-controls-bar">
+      <div class="nav-tabs" id="navTabs">
+        <button class="nav-tab-btn active" data-tab="priority">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          Priority Feed
+          <span class="tab-count-badge" id="tabCountPriority">0</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="actions">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          Action Items & Tasks
+          <span class="tab-count-badge" id="tabCountActions">0</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="deadlines">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Deadlines Radar
+          <span class="tab-count-badge" id="tabCountDeadlines">0</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="changed_plans">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          Changed Plans
+          <span class="tab-count-badge" id="tabCountChangedPlans">0</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="decisions">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Decisions Log
+          <span class="tab-count-badge" id="tabCountDecisions">0</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="timeline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Event Timeline
+          <span class="tab-count-badge" id="tabCountTimeline">0</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="thread">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Full Conversation
+          <span class="tab-count-badge" id="tabCountThread">0</span>
+        </button>
+      </div>
+
+      <div class="controls-right">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Filter by keyword or author...">
+        </div>
+
+        <button class="secondary-action-btn" id="exportMarkdownBtn" title="Export executive summary and tasks as Markdown">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Export Summary
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab 1: Priority Feed Pane -->
+    <div class="tab-pane active" id="tabPriority">
+      <div class="subfilter-bar">
+        <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Filter Urgency:</span>
+        <button class="filter-chip active" data-priority-filter="all">All Messages</button>
+        <button class="filter-chip" data-priority-filter="critical">🔴 Critical / Blockers</button>
+        <button class="filter-chip" data-priority-filter="high">🟠 High Priority</button>
+        <button class="filter-chip" data-priority-filter="medium">🟡 Medium</button>
+        <button class="filter-chip" data-priority-filter="for-me">👤 Only For Me</button>
+      </div>
+
+      <div class="priority-feed-list" id="priorityFeedList">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Tab 2: Action Items Pane -->
+    <div class="tab-pane" id="tabActions">
+      <div class="subfilter-bar">
+        <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Filter Tasks:</span>
+        <button class="filter-chip active" data-action-filter="all">All Tasks</button>
+        <button class="filter-chip" data-action-filter="me">Assigned to Me</button>
+        <button class="filter-chip" data-action-filter="pending">⏳ Pending Only</button>
+        <button class="filter-chip" data-action-filter="completed">✅ Completed</button>
+        <button class="filter-chip" data-action-filter="urgent">⚡ Critical & High</button>
+        <button class="filter-chip" data-action-filter="deadline">⏰ With Deadlines</button>
+        <button class="secondary-action-btn" id="copyTasksMarkdownBtn" style="margin-left: auto;">
+          📋 Copy Tasks as Markdown Todo
+        </button>
+      </div>
+
+      <div class="actions-list" id="actionsList">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Tab 3: Deadlines Radar Pane (Section 4 & 7) -->
+    <div class="tab-pane" id="tabDeadlines">
+      <div class="subfilter-bar">
+        <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Filter Deadlines:</span>
+        <button class="filter-chip active" data-deadline-filter="all">All Deadlines</button>
+        <button class="filter-chip" data-deadline-filter="for-me">Due From Me</button>
+        <button class="filter-chip" data-deadline-filter="urgent">Urgent / Today</button>
+      </div>
+      <div class="deadlines-radar-list" id="deadlinesRadarList">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Tab 4: Changed Plans Pane (Section 5 & 7) -->
+    <div class="tab-pane" id="tabChangedPlans">
+      <div class="subfilter-bar">
+        <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Filter Plan Changes:</span>
+        <button class="filter-chip active" data-plan-filter="all">All Plan Changes</button>
+        <button class="filter-chip" data-plan-filter="schedule">Schedule / Time Shifts</button>
+        <button class="filter-chip" data-plan-filter="venue">Venue / Room / Link Shifts</button>
+      </div>
+      <div class="changed-plans-grid" id="changedPlansGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Tab 5: Decisions Log Pane -->
+    <div class="tab-pane" id="tabDecisions">
+      <div class="decisions-grid" id="decisionsGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Tab 6: Chronological Timeline of Important Events (Feature 1) -->
+    <div class="tab-pane" id="tabTimeline">
+      <div class="timeline-section-card">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Chronological Timeline of Important Events</span>
+          </div>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Sequential event milestones reconstructed in conversation order</span>
+        </div>
+        <div class="timeline-stream" id="timelineStream">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 7: Full Thread Pane -->
+    <div class="tab-pane" id="tabThread">
+      <div class="thread-container" id="threadContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+  </main>
+  </div> <!-- /#mainAppView -->
+
+  <!-- Modal: Custom Chat Paste & Import -->
+  <div class="modal-backdrop" id="importModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span>📥 Import Custom Conversation</span>
+        </h3>
+        <button class="modal-close-btn" id="closeImportModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+          Paste text or drop files from Slack, Discord, WhatsApp, or Microsoft Teams (.txt, .json, .csv). All processing runs 100% locally on your machine.
+        </p>
+
+        <!-- Drag & Drop Zone -->
+        <div id="dropZone" style="border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: var(--radius-md); padding: 1rem; text-align: center; background: rgba(255, 255, 255, 0.02); cursor: pointer; transition: all 0.2s ease;">
+          <input type="file" id="fileUploadInput" accept=".txt,.json,.csv,.log" style="display: none;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 0.25rem;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">Click or Drag & Drop File Here</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);">Supports chat exports (.txt, .json, .csv)</div>
+        </div>
+
+        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin: -0.25rem 0;">— OR PASTE RAW TEXT —</div>
+
+        <textarea class="modal-textarea" id="customChatInput" placeholder="Example format:
+[10:15 AM] Sarah: Hey team, we have a critical blocker on checkout.
+[10:16 AM] David: Investigating database pool now.
+[10:17 AM] Sarah: @Alex can you verify if staging checkout is affected? Deadline by 11 AM.
+[10:18 AM] Sarah: Decision: We will rollback release v2.4.2 immediately."></textarea>
+      </div>
+      <div class="modal-actions" style="justify-content: space-between;">
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+          <button class="secondary-action-btn" id="loadCustomExampleBtn" style="font-size: 0.78rem; padding: 0.4rem 0.75rem;">🚨 Incident Template</button>
+          <button class="secondary-action-btn" id="loadCustomSprintBtn" style="font-size: 0.78rem; padding: 0.4rem 0.75rem;">🚀 Launch Template</button>
+          <button class="secondary-action-btn" id="loadCustomShiftBtn" style="font-size: 0.78rem; padding: 0.4rem 0.75rem;">🔄 Changed Plan Template</button>
+        </div>
+        <button class="primary-btn" id="analyzeCustomChatBtn">Analyze Locally (0ms Cloud)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Local-First Privacy & Security Audit -->
+  <div class="modal-backdrop" id="privacyModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span>Local-First Privacy Inspector</span>
+        </h3>
+        <button class="modal-close-btn" id="closePrivacyModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="audit-row">
+          <div>
+            <div style="font-weight: 600; font-size: 0.88rem;">Data Egress to Cloud</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Network telemetry & outbound API monitoring</div>
+          </div>
+          <span class="audit-status verified">0 Bytes Sent</span>
+        </div>
+
+        <div class="audit-row">
+          <div>
+            <div style="font-weight: 600; font-size: 0.88rem;">Execution Engine</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Heuristics, extraction & summarization</div>
+          </div>
+          <span class="audit-status verified">Local V8 / Browser CPU</span>
+        </div>
+
+        <div class="audit-row">
+          <div>
+            <div style="font-weight: 600; font-size: 0.88rem;">Storage Isolation</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Where conversation data resides</div>
+          </div>
+          <span class="audit-status verified">Local Session Only</span>
+        </div>
+
+        <div class="audit-row">
+          <div>
+            <div style="font-weight: 600; font-size: 0.88rem;">Third-party Trackers & Cookies</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">External analytics, ads, or AI endpoints</div>
+          </div>
+          <span class="audit-status verified">0 Trackers</span>
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); padding: 0.85rem; border-radius: 8px; font-size: 0.82rem; color: #a7f3d0; line-height: 1.45;">
+          🔒 <strong>Guaranteed Offline Privacy:</strong> All entity parsing, decision extraction, urgency scoring, and executive synthesis execute entirely in your local browser sandbox. No chat transcript, participant name, or summary ever crosses a network boundary.
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="primary-btn" id="closePrivacyModalBtn2">Close Inspector</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Pre-Analysis Message Preview (Section 1) -->
+  <div class="modal-backdrop" id="previewModal">
+    <div class="modal-window" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span>👁️ Message Preview Before Analysis</span>
+        </h3>
+        <button class="modal-close-btn" id="closePreviewModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="previewModalBody">
+        <!-- Rendered via JS -->
+      </div>
+      <div class="modal-actions">
+        <button class="secondary-action-btn" id="cancelPreviewBtn">Back to Input</button>
+        <button class="primary-btn" id="confirmAnalysisBtn">Run Local AI Analysis 🚀</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Evidence & Verification (Section 6) -->
+  <div class="modal-backdrop" id="evidenceModal">
+    <div class="modal-window" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <span>🔍 Message Evidence & Verification</span>
+        </h3>
+        <button class="modal-close-btn" id="closeEvidenceModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="evidenceModalBody">
+        <!-- Rendered via JS -->
+      </div>
+      <div class="modal-actions">
+        <button class="primary-btn" id="closeEvidenceModalBtn2">Close Evidence</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notice -->
+  <div class="toast-notice" id="toastNotice">
+    <span>Item copied to clipboard!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="sample_data.js"></script>
+  <script src="nlp_engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
